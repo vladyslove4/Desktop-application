@@ -1,0 +1,143 @@
+﻿<UserControl x:Class="DesktopApp.View.GroupsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DesktopApp.View"
+            
+            mc:Ignorable="d" Width="600" Height="450">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="350" />
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        
+        <ListView Grid.Row = "0" Width="600" Margin="0,0,0,0" x:Name="groupsList" ItemsSource="{Binding Groups}">
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Highlighted}" Value="True">
+                            <Setter Property="IsSelected" Value="True" ></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header=" ID"
+                                    Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock HorizontalAlignment="Center" Text="{Binding GroupId}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Name"
+                                    Width="150">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock HorizontalAlignment="Center" Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Course Name"
+                                    Width="150">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock HorizontalAlignment="Center" Text="{Binding CourseName}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Teacher"
+                                    Width="150">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock HorizontalAlignment="Center" Text="{Binding TeacherName}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Grid.Row="1" Height="50">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button Content="Add"   
+                Height=" 30"
+                Margin=" 5,10,5,5"
+                Grid.Column="0"
+                    
+                Command="{Binding AddGroupCommand}" />
+
+                <Button Content="Edit"   
+                Height=" 30"
+                Margin=" 5,10,5,5"
+                Grid.Column="1"
+     
+                Command="{Binding EditGroupCommand}"
+                        CommandParameter="{Binding ElementName= groupsList, Path=SelectedItem}"/>
+
+                <Button Content="Delete"   
+                Height=" 30"
+                Margin=" 5,10,5,5"
+                Grid.Column="2"
+     
+                Command="{Binding DeleteGroupCommand}" 
+                        CommandParameter="{Binding ElementName= groupsList, Path=SelectedItem}"/>
+
+
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Height="50">
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+
+                </Grid.ColumnDefinitions>
+
+                <Button Content="Export CSV"   
+                        Height=" 30"
+                        Margin="5,10,5,0"
+                        Grid.Column="0"
+                        Command="{Binding ExportToCSV}" 
+                        CommandParameter="{Binding ElementName= groupsList, Path=SelectedItem}"/>
+
+                <Button Content="Import CSV"   
+                        Height=" 30"
+                        Margin="5,10,5,0"
+                        Grid.Column="1"
+                        Command="{Binding ImportCSV}"
+                        CommandParameter="{Binding ElementName= groupsList, Path=SelectedItem}"/>
+
+                <Button Content="Create PDF "  
+                        
+                        Height=" 30"
+                        Margin="5,10,5,0"
+                        Grid.Column="2"
+                        Command="{Binding ExportToPDF}"
+                        CommandParameter="{Binding ElementName= groupsList, Path=SelectedItem}"
+
+                        />
+            </Grid>
+
+        </StackPanel>
+
+    </Grid>
+</UserControl>
